@@ -88,10 +88,11 @@ y = np.array(y)
 
 st.subheader('Original Price vs Predicted Price')
 fig4 = plt.figure(figsize=(8,6))
-plt.plot(predict,'r', label='Original Price')
-plt.plot(y,'g' ,label='Predicted Price')
+
+# Use actual data instead
+plt.plot(y, 'g', label='Actual Price')
+
 plt.xlabel('Time')
 plt.ylabel('Price')
-plt.show()
+plt.legend()
 st.pyplot(fig4)
-
