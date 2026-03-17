@@ -1,11 +1,11 @@
 import numpy as np
 import pandas as pd
 import yfinance as yf
-from keras.models import load_model
+#from keras.models import load_model
 import streamlit as st
 import matplotlib.pyplot as plt
 
-model = load_model('Stock Predictions Model.keras')
+ # model = load_model('Stock Predictions Model.keras')
 
 st.header('Stock Market Predictor')
 
@@ -18,23 +18,22 @@ data = yf.download(stock, start, end)
 st.subheader('Stock Data')
 st.write(data)
 
-# Train-Test Split
 data_train = pd.DataFrame(data.Close[0:int(len(data)*0.80)])
 data_test = pd.DataFrame(data.Close[int(len(data)*0.80): len(data)])
 
 from sklearn.preprocessing import MinMaxScaler
 scaler = MinMaxScaler(feature_range=(0,1))
 
-# Take last 100 days from training
+
 pas_100_days = data_train.tail(100)
 
-# Combine with test data
+
 data_test = pd.concat([pas_100_days, data_test], ignore_index=True)
 
-# Scale data
+
 data_test_scaler = scaler.fit_transform(data_test)
 
-# Create sequences
+
 st.subheader(' Price vs MA50')
 ma_50_days = data.Close.rolling(50).mean()
 fig1 = plt.figure(figsize=(8,6))
@@ -70,15 +69,15 @@ for i in range(100, data_test_scaler.shape[0]):
     x.append(data_test_scaler[i-100:i])
     y.append(data_test_scaler[i])
 
-# Convert to numpy arrays (OUTSIDE loop)
+
 x = np.array(x)
 y = np.array(y)
 
-predict = model.predict(x)
-scale= 1/scaler.scale_
+#predict = model.predict(x)
+#scale= 1/scaler.scale_
 
-predict = predict*scale
-y= y*scale
+#predict = predict*scale
+#y= y*scale
 
 st.subheader('Original Price vs Predicted Price')
 fig4 = plt.figure(figsize=(8,6))
