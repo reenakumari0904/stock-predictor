@@ -14,6 +14,13 @@ start = '2012-01-01'
 end = '2025-12-31'
 
 data = yf.download(stock, start, end)
+# Clean data
+data.dropna(inplace=True)
+
+# Safety check
+if data.empty:
+    st.error("No data found. Please enter a valid stock symbol.")
+    st.stop()
 
 st.subheader('Stock Data')
 st.write(data)
